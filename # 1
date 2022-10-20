@@ -1,0 +1,185 @@
+#1 Вычислить n-ое треугольного число(сумма чисел от 1 до n), n! (произведение чисел от 1 до n)
+
+package homework_1;
+
+import java.util.Scanner;
+
+public class task1 {
+    public static int MakeSummNums(int n) {
+        int result = 0;
+        for (int i = 0; i <= n; i++) {
+            result += i;
+        }
+        return result;
+    }
+
+    public static int MakeMultNums(int n) {
+        int result = 1;
+        for (int i = 1; i <= n; i++) {
+            result *= i;
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        // Вычислить n-ое треугольного число(сумма чисел от 1 до n), n! (произведение
+        // чисел от 1 до n)
+        Scanner iScanner = new Scanner(System.in);
+        System.out.printf("Введите n: ");
+        int n = iScanner.nextInt();
+        iScanner.close();
+        System.out.printf("Сумма чисел в диапазоне от 1 до %d равна: %d\n", n, MakeSummNums(n));
+        System.out.printf("Произведение чисел в диапазоне от 1 до %d равна: %d", n, MakeMultNums(n));
+    }
+}
+
+#2 Вывести все простые числа от 1 до 1000
+
+package homework_1;
+
+import java.util.Scanner;
+
+public class task2 {
+    public static boolean checkPrimeOrNot(int number) {
+        boolean isPrime = true;
+        if (0 == number || 1 == number) {
+            System.out.println("0 и 1 не являются простыми числами");
+            isPrime = false;
+        } else {
+            for (int i = 2; i <= number / 2; i++) {
+                if (number % i == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+
+        }
+        return isPrime;
+    }
+
+    public static void printPrime(int number) {
+        for (int i = 1; i <= number; i++) {
+            if (checkPrimeOrNot(i)) {
+                System.out.print(i + " ");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // Вывести все простые числа от 1 до 1000
+        Scanner iScanner = new Scanner(System.in);
+        System.out.printf("Введите n: ");
+        int n = iScanner.nextInt();
+        iScanner.close();
+        printPrime(n);
+    }
+}
+
+
+#3 Реализовать простой калькулятор
+
+package homework_1;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+public class task3 {
+    public static int Calc(int a, int b,String choice, String pathFile) {
+        int res = 0;
+        Logger logger = homework_2.task1.WriteLog(pathFile);
+        switch (choice) {
+            case ("+"):
+                res = a + b;
+                logger.log(Level.INFO, String.format("%d + %d = %d", a,b,res));
+                break;
+
+            case ("-"):
+                res = a - b;
+                logger.log(Level.INFO, String.format("%d - %d = %d", a,b,res));
+                break;
+
+            case ("*"):
+                res = a * b;
+                logger.log(Level.INFO, String.format("%d * %d = %d", a,b,res));
+                break;
+
+            case ("/"):
+                res = a / b;
+                logger.log(Level.INFO, String.format("%d / %d = %d", a,b,res));
+                break;
+
+            default:
+                break;
+        }
+        return res;
+    }
+    public static void main(String[] args) {
+        // Реализовать простой калькулятор
+        String pathProject = System.getProperty("user.dir");
+        System.out.println(pathProject);
+        String pathFile = pathProject.concat("/homework_1/task3.log");
+        Scanner iScanner = new Scanner(System.in);
+        System.out.printf("Введите первое число: ");
+        int a = iScanner.nextInt();
+        System.out.printf("Введите второе число: ");
+        int b = iScanner.nextInt();
+        System.out.printf(
+                "Введите + для сложения\nВведите - для вычетания\nВведите * для умножения\nВведите / для деления\n");
+        System.out.printf(
+                "Ввод: ");
+        String choice = iScanner.next();
+        iScanner.close();
+        int res = Calc(a, b, choice, pathFile);
+        System.out.printf("Результат = %d", res);
+         
+    }
+
+}
+
+#4
+package homework_1;
+
+public class task4 {
+    public static int takeNumber(String q) {
+        String[] arrQ = q.split("");
+        int number = 0;
+        int index = 0;
+        for (int i = 0; i < arrQ.length; i++) {
+            try {
+                number = Integer.parseInt(arrQ[i]);
+                index = i;
+                if (index == 0) {
+                    number *= 10;
+                }
+            } catch (NumberFormatException c) {
+                System.out.println("Элемент не число");
+            }
+        }
+        return number;
+    }
+
+    public static void checkDifference(String q, String w, int e) {
+        int numQ = takeNumber(q);
+        int numW = takeNumber(w);
+        int numDiff = e - (numQ + numW);
+        System.out.println(numDiff);
+        if (numDiff >= 0) {
+            int forNumQ = numDiff % 10;
+            int forNumW = numDiff - forNumQ;
+            int res = numQ + forNumQ + numW + forNumW;
+            System.out.printf("%d + %d = %d", (numQ + forNumQ), (numW + forNumW), res);
+        } else {
+            System.out.println("Таких чисел нет");
+        }
+    }
+
+    public static void main(String[] args) {
+        // *+Задано уравнение вида q + w = e, q, w, e >= 0.
+        // Некоторые цифры могут быть заменены знаком вопроса,
+        // например 2? + ?5 = 69. Требуется восстановить выражение до верного равенства.
+        // Предложить хотя бы одно решение или сообщить, что его нет.
+        String q = 2 + "?";
+        String w = "?" + 5;
+        int e = 69;
+        checkDifference(q, w, e);
+    }
+}
