@@ -1,0 +1,152 @@
+
+1)
+// Пусть дан LinkedList с несколькими элементами. 
+// Реализуйте метод, который вернет “перевернутый” список.
+import java.util.LinkedList;
+
+public class zadanie_1 {
+    public static void main(String[] args) {
+        LinkedList<Integer> ll = new LinkedList<Integer>();
+        for (int i = 1; i <= 10; i++) {
+            ll.add(i);
+        }
+        System.out.println(ll);
+        LinkedList<Integer> new_ll = new LinkedList<Integer>();
+        for (int i = ll.size() - 1; i >= 0; i--) {
+            new_ll.add(ll.get(i));
+        }
+        System.out.println(new_ll);
+    }
+}
+
+
+--------------------------------------
+2) 
+// Реализуйте очередь с помощью LinkedList со следующими методами:
+// enqueue() - помещает элемент в конец очереди,
+// dequeue() - возвращает первый элемент из очереди и удаляет его,
+// first() - возвращает первый элемент из очереди, не удаляя.
+
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class zadanie_2 {
+    public static void enqueue(LinkedList<Integer> list, int elem) {
+        list.addLast(elem);
+    }
+
+    public static int dequeue(LinkedList<Integer> list) {
+        return list.removeFirst();
+    }
+
+    public static int first(LinkedList<Integer> list) {
+        return list.getFirst();
+    }
+
+    public static void basic(LinkedList<Integer> list) {
+        basic: while (true) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Выберите какую операцию хотите совершить:\n1 - добавление числа в конец очереди\n2 - получение первого элемента из очереди и его удаление\n3 - отображение первого элемента\n4 - выход");
+            String data = sc.nextLine();
+            switch(data) {
+                case("1"):
+                    System.out.print("Введите число, которое хотите добавить в очередь: ");
+                    int number = sc.nextInt();
+                    enqueue(list, number);
+                    System.out.println("Ваша очередь: " + list);
+                    break;
+                case("2"):
+                    System.out.printf("Элемент %d, который был удалён из очереди", dequeue(list));
+                    System.out.println("\nВаша очередь: " + list);
+                    break;
+                case("3"):
+                    System.out.printf("Первый элемент из очереди: %d", first(list));
+                    System.out.println("\nВаша очередь: " + list);
+                    break;
+                case("4"):
+                    break basic;
+            }
+        }      
+    }
+    public static void main(String[] args) {
+        LinkedList<Integer> ll = new LinkedList<Integer>();
+        basic(ll);
+    }
+}
+
+
+--------------------------------------
+3)
+
+import java.util.Scanner;
+
+public class zadanie_3 {
+
+    static int calc(int first_num, char oper, int second_num) {
+        if (oper == '/' && second_num == 0) {
+            System.out.println("на 0 делить нельзя");
+            return 0;
+        }
+        else if (oper == '+') {
+            System.out.printf("%d + %d = %d", first_num, second_num, first_num + second_num);
+            return first_num + second_num;
+        }
+        else if (oper == '-') {
+            System.out.printf("%d - %d = %d", first_num, second_num, first_num - second_num);
+            return first_num - second_num;
+        }
+        else if (oper == '*') {
+            System.out.printf("%d * %d = %d", first_num, second_num, first_num * second_num);
+            return first_num * second_num;
+        }
+        else if (oper == '/') {
+            System.out.printf("%d / %d = %d", first_num, second_num, first_num / second_num);   
+            return first_num / second_num;
+        }
+        return 0;
+    }
+    static int input_calc(int first_number) {
+        Scanner iScanner = new Scanner(System.in);
+        System.out.print("Введите операцию (+, -, *, /): ");
+        char operation = iScanner.next().charAt(0);
+        System.out.print("Введите второе число: ");
+        int second_number = iScanner.nextInt();
+        int result = calc(first_number, operation, second_number);
+        return result;
+    }
+    static void choice_operation(int first_number, int result) {
+        cycle: while (true) {
+            Scanner iScanner = new Scanner(System.in);
+            System.out.println("\nВыберите какую операцию хотите совершить:\n1 - продолжить\n2 - отменить предыдущее действие\n3 - выход");
+            String choice = iScanner.nextLine();
+            switch(choice) {
+                case("1"):
+                    first_number = result;
+                    System.out.println(first_number);
+                    result = input_calc(first_number);
+                    break;
+                case("2"):
+                    System.out.println("Операция отменена");
+                    System.out.print(first_number);
+                    result = first_number;
+                    break;
+                case("3"):
+                    break cycle;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Scanner iScanner = new Scanner(System.in);
+        System.out.print("Введите первое число: ");
+        int first_num = iScanner.nextInt();
+        int res = input_calc(first_num);
+        choice_operation(first_num, res);
+        iScanner.close();
+    }
+}
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
